@@ -15,12 +15,19 @@ export interface Block {
   type: BlockType
 }
 
-export interface EditorState {
+export interface TabState {
+  id: string
   blocks: Block[]
   activeBlockId: string | null
   cursorOffset: number
   filePath: string | null
   isDirty: boolean
+}
+
+export interface EditorState {
+  tabs: TabState[]
+  activeTabId: string
+  sidebarPath: string | null
 }
 
 export type EditorAction =
@@ -32,6 +39,11 @@ export type EditorAction =
   | { type: 'NEW_FILE' }
   | { type: 'MARK_SAVED' }
   | { type: 'APPEND_BLOCK' }
+  | { type: 'OPEN_TAB'; filePath: string; content: string }
+  | { type: 'CLOSE_TAB'; tabId: string }
+  | { type: 'SWITCH_TAB'; tabId: string }
+  | { type: 'NEW_TAB' }
+  | { type: 'SET_SIDEBAR_PATH'; path: string }
 
 export interface ElectronAPI {
   openFile: () => Promise<{ filePath: string; content: string } | null>
@@ -51,6 +63,7 @@ export interface ElectronAPI {
   onMenuOpenFile: (cb: () => void) => () => void
   onMenuSaveFile: (cb: () => void) => () => void
   onMenuSaveAs: (cb: () => void) => () => void
+  listDirectory: (dirPath: string) => Promise<{ name: string; isDirectory: boolean; path: string }[]>
 }
 
 declare global {

@@ -8,8 +8,7 @@ interface Props {
 }
 
 export function BlockList({ onBlockChange }: Props) {
-  const { state, dispatch } = useEditor()
-  // Store the last rendered height per block id to prevent layout shift
+  const { activeTab, dispatch } = useEditor()
   const renderedHeights = useRef<Map<string, number>>(new Map())
 
   function handleActivate(id: string, height: number) {
@@ -26,16 +25,16 @@ export function BlockList({ onBlockChange }: Props) {
   }
 
   function handleMoveToPrev(id: string) {
-    const idx = state.blocks.findIndex((b) => b.id === id)
+    const idx = activeTab.blocks.findIndex((b) => b.id === id)
     if (idx > 0) {
-      dispatch({ type: 'SET_ACTIVE_BLOCK', id: state.blocks[idx - 1].id })
+      dispatch({ type: 'SET_ACTIVE_BLOCK', id: activeTab.blocks[idx - 1].id })
     }
   }
 
   function handleMoveToNext(id: string) {
-    const idx = state.blocks.findIndex((b) => b.id === id)
-    if (idx < state.blocks.length - 1) {
-      dispatch({ type: 'SET_ACTIVE_BLOCK', id: state.blocks[idx + 1].id })
+    const idx = activeTab.blocks.findIndex((b) => b.id === id)
+    if (idx < activeTab.blocks.length - 1) {
+      dispatch({ type: 'SET_ACTIVE_BLOCK', id: activeTab.blocks[idx + 1].id })
     }
   }
 
@@ -45,8 +44,8 @@ export function BlockList({ onBlockChange }: Props) {
 
   return (
     <div className="block-list">
-      {state.blocks.map((block, idx) => {
-        const isActive = block.id === state.activeBlockId
+      {activeTab.blocks.map((block, idx) => {
+        const isActive = block.id === activeTab.activeBlockId
 
         return (
           <div
@@ -58,7 +57,7 @@ export function BlockList({ onBlockChange }: Props) {
                 block={block}
                 initialHeight={renderedHeights.current.get(block.id) ?? 0}
                 blockIndex={idx}
-                totalBlocks={state.blocks.length}
+                totalBlocks={activeTab.blocks.length}
                 onChange={onBlockChange}
                 onSplitBlock={handleSplitBlock}
                 onMergeWithPrev={handleMergeWithPrev}

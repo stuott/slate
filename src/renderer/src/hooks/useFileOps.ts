@@ -3,46 +3,24 @@ import { useDialog } from '../context/DialogContext'
 import { serializeBlocks } from '../core/serializer'
 
 export function useFileOps() {
-  const { state, dispatch, serializeContent } = useEditor()
+  const { activeTab, dispatch, serializeContent } = useEditor()
   const { showDialog } = useDialog()
 
   async function newFile() {
-    if (state.isDirty) {
-      const result = await showDialog({
-        title: 'Unsaved changes',
-        message: 'Start a new file? Your current changes will be lost.',
-        buttons: [
-          { label: 'Discard changes', value: 'discard', variant: 'danger' },
-          { label: 'Cancel', value: 'cancel', variant: 'default' },
-        ],
-      })
-      if (result !== 'discard') return
-    }
-    dispatch({ type: 'NEW_FILE' })
+    dispatch({ type: 'NEW_TAB' })
   }
 
   async function openFile() {
-    if (state.isDirty) {
-      const result = await showDialog({
-        title: 'Unsaved changes',
-        message: 'Open a different file? Your current changes will be lost.',
-        buttons: [
-          { label: 'Discard changes', value: 'discard', variant: 'danger' },
-          { label: 'Cancel', value: 'cancel', variant: 'default' },
-        ],
-      })
-      if (result !== 'discard') return
-    }
     const file = await window.electronAPI.openFile()
     if (file) {
-      dispatch({ type: 'LOAD_FILE', content: file.content, filePath: file.filePath })
+      dispatch({ type: 'OPEN_TAB', content: file.content, filePath: file.filePath })
     }
   }
 
   async function saveFile() {
     const content = serializeContent()
-    if (state.filePath) {
-      await window.electronAPI.saveFile(state.filePath, content)
+    if (activeTab.filePath) {
+      await window.electronAPI.saveFile(activeTab.filePath, content)
       dispatch({ type: 'MARK_SAVED' })
     } else {
       await saveFileAs()
@@ -58,8 +36,8 @@ export function useFileOps() {
   }
 
   async function reloadFile() {
-    if (!state.filePath) return
-    if (state.isDirty) {
+    if (!activeTab.filePath) return
+    if (activeTab.isDirty) {
       const result = await showDialog({
         title: 'Reload from disk',
         message: 'Discard unsaved changes and reload the file?',
@@ -70,14 +48,14 @@ export function useFileOps() {
       })
       if (result !== 'reload') return
     }
-    const content = await window.electronAPI.readFile(state.filePath)
-    dispatch({ type: 'LOAD_FILE', content, filePath: state.filePath })
+    const content = await window.electronAPI.readFile(activeTab.filePath)
+    dispatch({ type: 'LOAD_FILE', content, filePath: activeTab.filePath })
   }
 
   // Used by auto-save in Editor: builds content with the in-flight raw value before
-  // the state update has flushed, avoiding a stale-closure read of state.blocks.
+  // the state update has flushed, avoiding a stale-closure read of activeTab.blocks.
   function serializeWithOverride(id: string, raw: string): string {
-    return serializeBlocks(state.blocks.map((b) => (b.id === id ? { ...b, raw } : b)))
+    return serializeBlocks(activeTab.blocks.map((b) => (b.id === id ? { ...b, raw } : b)))
   }
 
   return { newFile, openFile, saveFile, saveFileAs, reloadFile, serializeWithOverride }

@@ -162,6 +162,15 @@ ipcMain.handle('fs:read-file', async (_event, filePath: string) => {
   return fs.readFile(filePath, 'utf-8')
 })
 
+ipcMain.handle('fs:list-directory', async (_event, dirPath: string) => {
+  const entries = await fs.readdir(dirPath, { withFileTypes: true })
+  return entries.map((e) => ({
+    name: e.name,
+    isDirectory: e.isDirectory(),
+    path: join(dirPath, e.name)
+  }))
+})
+
 ipcMain.handle('set-title', (_event, title: string) => {
   mainWindow?.setTitle(title)
 })

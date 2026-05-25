@@ -15,7 +15,7 @@ import { useFileOps } from '../hooks/useFileOps'
 import { FontSelector } from './FontSelector'
 
 export function Toolbar() {
-  const { state } = useEditor()
+  const { activeTab } = useEditor()
   const { newFile, openFile, saveFile, reloadFile } = useFileOps()
   const [isMaximized, setIsMaximized] = useState(false)
 
@@ -25,25 +25,25 @@ export function Toolbar() {
   }, [])
 
   useEffect(() => {
-    const filename = state.filePath
-      ? state.filePath.split(/[\\/]/).pop() ?? 'untitled.md'
+    const filename = activeTab.filePath
+      ? activeTab.filePath.split(/[\\/]/).pop() ?? 'untitled.md'
       : 'untitled.md'
-    window.electronAPI.setTitle(`${state.isDirty ? '• ' : ''}${filename} — Slate`)
-  }, [state.filePath, state.isDirty])
+    window.electronAPI.setTitle(`${activeTab.isDirty ? '• ' : ''}${filename} — Slate`)
+  }, [activeTab.filePath, activeTab.isDirty])
 
-  const filename = state.filePath
-    ? state.filePath.split(/[\\/]/).pop() ?? 'untitled.md'
+  const filename = activeTab.filePath
+    ? activeTab.filePath.split(/[\\/]/).pop() ?? 'untitled.md'
     : 'untitled.md'
 
-  const canReload = !!state.filePath
-  const canSave = state.isDirty || !!state.filePath
+  const canReload = !!activeTab.filePath
+  const canSave = activeTab.isDirty || !!activeTab.filePath
 
   return (
     <div className="toolbar-wrap">
       {/* Row 1: title + window controls */}
       <header className="toolbar">
         <span className="toolbar__title">
-          {state.isDirty && <span className="toolbar__dirty">•</span>}
+          {activeTab.isDirty && <span className="toolbar__dirty">•</span>}
           {filename}
         </span>
         <div className="toolbar__drag" />

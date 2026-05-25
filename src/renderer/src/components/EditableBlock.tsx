@@ -24,14 +24,14 @@ export function EditableBlock({
   onMoveToNext
 }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const { state } = useEditor()
+  const { activeTab } = useEditor()
 
   // Focus and restore cursor when this block becomes active
   useEffect(() => {
     const el = textareaRef.current
     if (!el) return
     el.focus()
-    const offset = state.cursorOffset
+    const offset = activeTab.cursorOffset
     if (offset > 0 && offset <= el.value.length) {
       el.selectionStart = offset
       el.selectionEnd = offset

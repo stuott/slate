@@ -24,23 +24,35 @@ body {
 
 .editor {
   flex: 1;
-  overflow-y: auto;
-  padding: 3rem 0 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.editor-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 3rem 0 0;
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
 }
 
-.editor::-webkit-scrollbar {
+.editor-scroll::-webkit-scrollbar {
   width: var(--scrollbar-width);
 }
 
-.editor::-webkit-scrollbar-track {
+.editor-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.editor::-webkit-scrollbar-thumb {
+.editor-scroll::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 3px;
 }

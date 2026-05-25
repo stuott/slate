@@ -42,7 +42,8 @@ const electronAPI = {
     const handler = () => cb()
     ipcRenderer.on('menu:save-as', handler)
     return () => ipcRenderer.removeListener('menu:save-as', handler)
-  }
+  },
+  listDirectory: (dirPath: string) => ipcRenderer.invoke('fs:list-directory', dirPath)
 }
 
 if (process.contextIsolated) {

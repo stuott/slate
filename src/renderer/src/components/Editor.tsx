@@ -2,10 +2,12 @@ import { useEffect, useRef } from 'react'
 import { useEditor } from '../context/EditorContext'
 import { useDialog } from '../context/DialogContext'
 import { BlockList } from './BlockList'
+import { TabBar } from './TabBar'
+import { Sidebar } from './Sidebar'
 import { useFileOps } from '../hooks/useFileOps'
 
 export function Editor() {
-  const { state, dispatch } = useEditor()
+  const { state, activeTab, dispatch } = useEditor()
   const { showDialog } = useDialog()
   const { newFile, openFile, saveFile, saveFileAs, serializeWithOverride } = useFileOps()
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -14,9 +16,9 @@ export function Editor() {
     dispatch({ type: 'UPDATE_BLOCK', id, raw })
     if (autoSaveRef.current !== null) clearTimeout(autoSaveRef.current)
     autoSaveRef.current = setTimeout(async () => {
-      if (state.filePath) {
+      if (activeTab.filePath) {
         const content = serializeWithOverride(id, raw)
-        await window.electronAPI.saveFile(state.filePath, content)
+        await window.electronAPI.saveFile(activeTab.filePath, content)
         dispatch({ type: 'MARK_SAVED' })
       }
     }, 1000)
@@ -36,7 +38,7 @@ export function Editor() {
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [state.filePath, state.blocks])
+  }, [activeTab.filePath, activeTab.blocks])
 
   // Register IPC menu listeners
   useEffect(() => {
@@ -50,10 +52,11 @@ export function Editor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Sync dirty state to main process for close-guard
+  // Sync dirty state to main process for close-guard (any tab)
   useEffect(() => {
-    window.electronAPI.setDirty(state.isDirty)
-  }, [state.isDirty])
+    const anyDirty = state.tabs.some((t) => t.isDirty)
+    window.electronAPI.setDirty(anyDirty)
+  }, [state.tabs])
 
   // Handle close-guard dialog triggered by main process
   useEffect(() => {
@@ -73,8 +76,14 @@ export function Editor() {
   }, [showDialog])
 
   return (
-    <main className="editor">
-      <BlockList onBlockChange={handleBlockChange} />
-    </main>
+    <div className="editor">
+      <Sidebar />
+      <main className="content-area">
+        <TabBar />
+        <div className="editor-scroll">
+          <BlockList onBlockChange={handleBlockChange} />
+        </div>
+      </main>
+    </div>
   )
 }
