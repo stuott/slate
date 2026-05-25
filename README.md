@@ -1,14 +1,12 @@
 ![Slate banner](./resources/banner.svg)
 
----
-
 **Slate** is a per-block hybrid markdown editor. The active block renders as a raw textarea; all other blocks render as sanitized GFM HTML. Typora/Obsidian-style live preview, scoped to block granularity.
 
 Built with Electron, Vite, and React.
 
 ---
 
-## Features
+![Features](./resources/header-features.svg)
 
 - **Per-block editing** — click any block to edit it as raw markdown; all others render as formatted HTML
 - **GFM support** — tables, task lists (`- [ ]`), strikethrough, fenced code blocks, linkify
@@ -18,9 +16,7 @@ Built with Electron, Vite, and React.
 - **Custom title bar** — frameless window with minimize / maximize / close controls
 - **Dark theme** — single dark palette, no light mode
 
----
-
-## Running the app
+![Running the app](./resources/header-running.svg)
 
 ```bash
 npm run dev          # start Electron + Vite dev server (HMR enabled)
@@ -31,9 +27,7 @@ npx vitest run       # run parser unit tests (21 tests)
 > **Requires Node >= 21.7** — Vite 7 uses `crypto.hash` which was added in Node 21.7.  
 > The project pins `"vite": "^7.0.0"`.
 
----
-
-## Project structure
+![Project structure](./resources/header-structure.svg)
 
 ```
 src/
@@ -67,9 +61,7 @@ resources/
   icon.ico               — Windows taskbar icon
 ```
 
----
-
-## Tech stack
+![Tech stack](./resources/header-tech.svg)
 
 | Package                  | Version     | Role                 |
 | ------------------------ | ----------- | -------------------- |
@@ -80,9 +72,7 @@ resources/
 | `markdown-it-task-lists` | —           | GFM task list syntax |
 | `DOMPurify`              | —           | XSS sanitisation     |
 
----
-
-## Design tokens
+![Design tokens](./resources/header-tokens.svg)
 
 All colours are defined in `src/renderer/src/styles/tokens.css`.
 
