@@ -7,8 +7,13 @@ const electronAPI = {
   saveFileAs: (content: string) => ipcRenderer.invoke('dialog:save-file-as', content),
   readFile: (filePath: string) => ipcRenderer.invoke('fs:read-file', filePath),
   setTitle: (title: string) => ipcRenderer.invoke('set-title', title),
-  showConfirm: (message: string) => ipcRenderer.invoke('show-confirm', message),
   setDirty: (dirty: boolean) => ipcRenderer.invoke('set-dirty', dirty),
+  onCloseGuard: (cb: () => void) => {
+    const handler = () => cb()
+    ipcRenderer.on('dialog:close-guard', handler)
+    return () => ipcRenderer.removeListener('dialog:close-guard', handler)
+  },
+  sendCloseGuardResult: (result: string) => ipcRenderer.send('close-guard-result', result),
   minimizeWindow: () => ipcRenderer.invoke('window-minimize'),
   maximizeWindow: () => ipcRenderer.invoke('window-maximize'),
   closeWindow: () => ipcRenderer.invoke('window-close'),

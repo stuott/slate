@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 46" height="46">
-  <rect width="800" height="46" fill="#1a2333"/>
-  <rect x="0" y="13" width="3" height="20" rx="1.5" fill="#5b9cf6"/>
-  <text x="16" y="30" font-family="system-ui,-apple-system,sans-serif"
-        font-size="16" font-weight="500" letter-spacing="2" fill="#e2e8f2">DESIGN TOKENS</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 46">
+  <rect width="800" height="46" fill="#1a2333" />
+  <rect x="0" y="13" width="3" height="20" rx="1.5" fill="#5b9cf6" />
+  <text x="16" y="30" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500"
+    letter-spacing="2" fill="#e2e8f2">DESIGN TOKENS</text>
 </svg>

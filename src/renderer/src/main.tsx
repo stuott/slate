@@ -4,6 +4,7 @@ import './styles/typography.css'
 import './styles/editor.css'
 import './styles/blocks.css'
 import './styles/toolbar.css'
+import './styles/dialog.css'
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'

@@ -42,25 +42,21 @@ function createWindow(): void {
     mainWindow?.webContents.send('window-maximize-change', false)
   })
 
-  // Intercept close when there are unsaved changes
+  // Intercept close when there are unsaved changes — renderer shows custom dialog
   mainWindow.on('close', async (e) => {
     if (isDirty) {
       e.preventDefault()
-      const { response } = await dialog.showMessageBox(mainWindow!, {
-        type: 'question',
-        buttons: ['Save', 'Discard', 'Cancel'],
-        defaultId: 0,
-        cancelId: 2,
-        message: 'You have unsaved changes.',
-        detail: 'Do you want to save before closing?'
+      mainWindow!.webContents.send('dialog:close-guard')
+      const result = await new Promise<string>((resolve) => {
+        ipcMain.once('close-guard-result', (_event, value: string) => resolve(value))
       })
-      if (response === 0) {
+      if (result === 'save') {
         mainWindow!.webContents.send('menu:save-file')
         setTimeout(() => {
           isDirty = false
           mainWindow?.destroy()
         }, 1500)
-      } else if (response === 1) {
+      } else if (result === 'discard') {
         isDirty = false
         mainWindow?.destroy()
       }
@@ -168,17 +164,6 @@ ipcMain.handle('fs:read-file', async (_event, filePath: string) => {
 
 ipcMain.handle('set-title', (_event, title: string) => {
   mainWindow?.setTitle(title)
-})
-
-ipcMain.handle('show-confirm', async (_event, message: string) => {
-  if (!mainWindow) return false
-  const { response } = await dialog.showMessageBox(mainWindow, {
-    type: 'question',
-    buttons: ['Yes', 'No'],
-    defaultId: 1,
-    message
-  })
-  return response === 0
 })
 
 ipcMain.handle('set-dirty', (_event, dirty: boolean) => {

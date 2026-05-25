@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { useEditor } from '../context/EditorContext'
+import { useDialog } from '../context/DialogContext'
 import { BlockList } from './BlockList'
 import { useFileOps } from '../hooks/useFileOps'
 
 export function Editor() {
   const { state, dispatch } = useEditor()
+  const { showDialog } = useDialog()
   const { newFile, openFile, saveFile, saveFileAs, serializeWithOverride } = useFileOps()
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -52,6 +54,23 @@ export function Editor() {
   useEffect(() => {
     window.electronAPI.setDirty(state.isDirty)
   }, [state.isDirty])
+
+  // Handle close-guard dialog triggered by main process
+  useEffect(() => {
+    const cleanup = window.electronAPI.onCloseGuard(async () => {
+      const result = await showDialog({
+        title: 'Unsaved changes',
+        message: 'Do you want to save your changes before closing?',
+        buttons: [
+          { label: 'Save', value: 'save', variant: 'primary' },
+          { label: 'Discard', value: 'discard', variant: 'danger' },
+          { label: 'Cancel', value: 'cancel', variant: 'default' },
+        ],
+      })
+      window.electronAPI.sendCloseGuardResult(result)
+    })
+    return cleanup
+  }, [showDialog])
 
   return (
     <main className="editor">

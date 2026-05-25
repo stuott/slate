@@ -1,25 +1,41 @@
 import { useEditor } from '../context/EditorContext'
+import { useDialog } from '../context/DialogContext'
 import { serializeBlocks } from '../core/serializer'
 
 export function useFileOps() {
   const { state, dispatch, serializeContent } = useEditor()
+  const { showDialog } = useDialog()
 
   async function newFile() {
     if (state.isDirty) {
-      const ok = await window.electronAPI.showConfirm('You have unsaved changes. Start a new file anyway?')
-      if (!ok) return
+      const result = await showDialog({
+        title: 'Unsaved changes',
+        message: 'Start a new file? Your current changes will be lost.',
+        buttons: [
+          { label: 'Discard changes', value: 'discard', variant: 'danger' },
+          { label: 'Cancel', value: 'cancel', variant: 'default' },
+        ],
+      })
+      if (result !== 'discard') return
     }
     dispatch({ type: 'NEW_FILE' })
   }
 
   async function openFile() {
     if (state.isDirty) {
-      const ok = await window.electronAPI.showConfirm('You have unsaved changes. Open a new file anyway?')
-      if (!ok) return
+      const result = await showDialog({
+        title: 'Unsaved changes',
+        message: 'Open a different file? Your current changes will be lost.',
+        buttons: [
+          { label: 'Discard changes', value: 'discard', variant: 'danger' },
+          { label: 'Cancel', value: 'cancel', variant: 'default' },
+        ],
+      })
+      if (result !== 'discard') return
     }
-    const result = await window.electronAPI.openFile()
-    if (result) {
-      dispatch({ type: 'LOAD_FILE', content: result.content, filePath: result.filePath })
+    const file = await window.electronAPI.openFile()
+    if (file) {
+      dispatch({ type: 'LOAD_FILE', content: file.content, filePath: file.filePath })
     }
   }
 
@@ -44,8 +60,15 @@ export function useFileOps() {
   async function reloadFile() {
     if (!state.filePath) return
     if (state.isDirty) {
-      const ok = await window.electronAPI.showConfirm('Discard unsaved changes and reload from disk?')
-      if (!ok) return
+      const result = await showDialog({
+        title: 'Reload from disk',
+        message: 'Discard unsaved changes and reload the file?',
+        buttons: [
+          { label: 'Reload', value: 'reload', variant: 'danger' },
+          { label: 'Cancel', value: 'cancel', variant: 'default' },
+        ],
+      })
+      if (result !== 'reload') return
     }
     const content = await window.electronAPI.readFile(state.filePath)
     dispatch({ type: 'LOAD_FILE', content, filePath: state.filePath })

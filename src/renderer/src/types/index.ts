@@ -39,8 +39,9 @@ export interface ElectronAPI {
   saveFileAs: (content: string) => Promise<string | null>
   readFile: (filePath: string) => Promise<string>
   setTitle: (title: string) => Promise<void>
-  showConfirm: (message: string) => Promise<boolean>
   setDirty: (dirty: boolean) => Promise<void>
+  onCloseGuard: (cb: () => void) => () => void
+  sendCloseGuardResult: (result: string) => void
   minimizeWindow: () => Promise<void>
   maximizeWindow: () => Promise<void>
   closeWindow: () => Promise<void>

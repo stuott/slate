@@ -1,0 +1,102 @@
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 20, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: dialog-fade 80ms ease;
+}
+
+.dialog {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  width: 380px;
+  max-width: calc(100vw - 3rem);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  animation: dialog-rise 120ms ease;
+}
+
+.dialog__title {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 0.5rem;
+}
+
+.dialog__message {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-secondary);
+  margin: 0 0 1.5rem;
+}
+
+.dialog__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.dialog__btn {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background 80ms ease, border-color 80ms ease, color 80ms ease;
+  outline: none;
+}
+
+.dialog__btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.dialog__btn--default {
+  background: transparent;
+  color: var(--color-secondary);
+}
+
+.dialog__btn--default:hover {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.dialog__btn--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.dialog__btn--primary:hover {
+  background: color-mix(in srgb, var(--color-accent) 80%, white);
+  border-color: color-mix(in srgb, var(--color-accent) 80%, white);
+}
+
+.dialog__btn--danger {
+  background: transparent;
+  border-color: color-mix(in srgb, #c04040 60%, var(--color-border));
+  color: #d07070;
+}
+
+.dialog__btn--danger:hover {
+  background: color-mix(in srgb, #c04040 20%, transparent);
+  border-color: #c04040;
+  color: #e08888;
+}
+
+@keyframes dialog-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes dialog-rise {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
