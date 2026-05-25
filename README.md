@@ -1,27 +1,4 @@
-<div style="background:#1a2333; border-radius:12px; padding:2rem 2.5rem; display:flex; align-items:center; justify-content:space-between;gap:1.5rem;">
-    <div style="display:flex; align-items:center; gap:1rem;">
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-            <rect width="64" height="64" rx="8" fill="#212d3e"/>
-            <rect x="8" y="10" width="42" height="6" rx="3" fill="#e2e8f2"/>
-            <rect x="18" y="20" width="40" height="6" rx="3" fill="#2a5f9e"/>
-            <rect x="8" y="20" width="6" height="6" rx="3" fill="#5b9cf6"/>
-            <rect x="8" y="30" width="32" height="6" rx="3" fill="#2d3f57"/>
-            <rect x="8" y="40" width="48" height="6" rx="3" fill="#2d3f57"/>
-            <rect x="8" y="50" width="36" height="6" rx="3" fill="#2d3f57"/>
-        </svg>
-        <div style="font-family:'JetBrains Mono', 'Fira Code', monospace;color:#e2e8f2; font-size:42px;line-height:1;">
-            slate<span style="color:#5b9cf6;">.</span>
-        </div>
-    </div>
-    <div>
-        <div style="font-family:system-ui; color:#4a6175; font-size:12px; letter-spacing:0.18em; margin-top:6px;">
-            MARKDOWN EDITOR
-        </div>
-        <div style="font-family:system-ui; color:#4a6175; font-size:12px; letter-spacing:0.18em;">
-            A clean surface for clear thinking.
-        </div>
-    </div>
-</div>
+![Slate banner](./resources/banner.svg)
 
 ---
 
@@ -94,14 +71,14 @@ resources/
 
 ## Tech stack
 
-| Package | Version | Role |
-|---|---|---|
-| `electron` | `^39` | Desktop shell |
-| `vite` / `electron-vite` | `^7` / `^5` | Build + HMR |
-| `react` | `^19` | UI |
-| `markdown-it` | `^14` | Markdown parser |
-| `markdown-it-task-lists` | — | GFM task list syntax |
-| `DOMPurify` | — | XSS sanitisation |
+| Package                  | Version     | Role                 |
+| ------------------------ | ----------- | -------------------- |
+| `electron`               | `^39`       | Desktop shell        |
+| `vite` / `electron-vite` | `^7` / `^5` | Build + HMR          |
+| `react`                  | `^19`       | UI                   |
+| `markdown-it`            | `^14`       | Markdown parser      |
+| `markdown-it-task-lists` | —           | GFM task list syntax |
+| `DOMPurify`              | —           | XSS sanitisation     |
 
 ---
 
@@ -109,13 +86,13 @@ resources/
 
 All colours are defined in `src/renderer/src/styles/tokens.css`.
 
-| Token | Value | Role |
-|---|---|---|
-| `--color-bg` | `#1a2333` | App background |
-| `--color-surface` | `#212d3e` | Active block, editor pane |
-| `--color-border` | `#2d3f57` | Borders, rendered line fill |
-| `--color-text` | `#e2e8f2` | Primary text, headings |
-| `--color-secondary` | `#8898aa` | Rendered body text |
-| `--color-muted` | `#4a6175` | Hints, UI chrome |
-| `--color-accent` | `#5b9cf6` | Cursor, active border, links |
+| Token                 | Value     | Role                           |
+| --------------------- | --------- | ------------------------------ |
+| `--color-bg`          | `#1a2333` | App background                 |
+| `--color-surface`     | `#212d3e` | Active block, editor pane      |
+| `--color-border`      | `#2d3f57` | Borders, rendered line fill    |
+| `--color-text`        | `#e2e8f2` | Primary text, headings         |
+| `--color-secondary`   | `#8898aa` | Rendered body text             |
+| `--color-muted`       | `#4a6175` | Hints, UI chrome               |
+| `--color-accent`      | `#5b9cf6` | Cursor, active border, links   |
 | `--color-accent-deep` | `#2a5f9e` | Active block background stripe |
