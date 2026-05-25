@@ -1,0 +1,37 @@
+:root {
+  --font-edit: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-render: 'Lora', Georgia, serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-size-base: 16px;
+  --line-height: 1.75;
+
+  --color-bg: #1a2333;
+  --color-surface: #212d3e;
+  --color-border: #2d3f57;
+
+  --color-text: #e2e8f2;
+  --color-secondary: #8898aa;
+  --color-muted: #4a6175;
+
+  --color-accent: #5b9cf6;
+  --color-accent-deep: #2a5f9e;
+
+  --editor-max-width: 700px;
+  --block-gap: 0.25rem;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --scrollbar-width: 6px;
+}
+
+/* Font style presets — applied via data-font attribute on <html> */
+:root[data-font="sans"] {
+  --font-render: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:root[data-font="mono"] {
+  --font-render: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+:root[data-font="classic"] {
+  --font-render: 'Georgia', 'Times New Roman', serif;
+}

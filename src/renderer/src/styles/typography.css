@@ -1,0 +1,97 @@
+/* Rendered markdown typography */
+.block__render {
+  font-family: var(--font-render);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--color-secondary);
+  word-wrap: break-word;
+}
+
+.block__render h1,
+.block__render h2,
+.block__render h3,
+.block__render h4,
+.block__render h5,
+.block__render h6 {
+  font-family: var(--font-render);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.block__render h1 { font-size: 2em;   font-weight: 700; }
+.block__render h2 { font-size: 1.5em; font-weight: 600; }
+.block__render h3 { font-size: 1.25em; font-weight: 600; }
+.block__render h4 { font-size: 1.1em; }
+.block__render h5 { font-size: 1em; }
+.block__render h6 { font-size: 0.9em; color: var(--color-muted); }
+
+.block__render p {
+  margin: 0;
+  color: var(--color-secondary);
+}
+
+.block__render a {
+  color: var(--color-accent);
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+}
+
+.block__render a:hover {
+  text-decoration: underline;
+}
+
+.block__render code {
+  font-family: var(--font-edit);
+  font-size: 0.875em;
+  background: var(--color-border);
+  color: var(--color-accent);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+
+.block__render pre {
+  font-family: var(--font-edit);
+  font-size: 0.875em;
+  background: var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.block__render pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--color-text);
+}
+
+.block__render blockquote {
+  border-left: 3px solid var(--color-accent-deep);
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.block__render ul,
+.block__render ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.block__render li {
+  margin-bottom: 0.1em;
+}
+
+.block__render hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0.5rem 0;
+}
+
+.block__render strong { font-weight: 700; }
+.block__render em { font-style: italic; }
+.block__render del { color: var(--color-muted); text-decoration: line-through; }

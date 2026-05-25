@@ -1,0 +1,139 @@
+.toolbar-wrap {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Row 1 — title bar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 0 0 14px;
+  background: #141c28;
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+.toolbar__drag {
+  flex: 1;
+  height: 100%;
+}
+
+.toolbar__right {
+  display: flex;
+  align-items: center;
+  -webkit-app-region: no-drag;
+}
+
+.toolbar__title {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--color-muted);
+  padding-right: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  cursor: default;
+  -webkit-app-region: no-drag;
+}
+
+.toolbar__dirty {
+  color: var(--color-accent);
+  margin-right: 4px;
+}
+
+.toolbar__controls {
+  display: flex;
+  align-items: stretch;
+  height: 44px;
+}
+
+.toolbar__wbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 100%;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 80ms ease, color 80ms ease;
+}
+
+.toolbar__wbtn:hover {
+  background: color-mix(in srgb, var(--color-border) 60%, transparent);
+  color: var(--color-text);
+}
+
+.toolbar__wbtn--close:hover {
+  background: #c42b1c;
+  color: #fff;
+}
+
+/* Row 2 — action bar */
+.toolbar__actionbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 6px;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.toolbar__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 15px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background 80ms ease, color 80ms ease;
+}
+
+.toolbar__btn:hover:not(:disabled) {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.toolbar__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.toolbar__sep {
+  width: 1px;
+  height: 20px;
+  background: var(--color-border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.font-selector {
+  height: 28px;
+  padding: 0 6px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+  transition: color 80ms ease, border-color 80ms ease;
+}
+
+.font-selector:hover,
+.font-selector:focus {
+  color: var(--color-text);
+  border-color: var(--color-secondary);
+}

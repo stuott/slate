@@ -1,0 +1,86 @@
+.block {
+  position: relative;
+  padding: 4px 0 4px 16px;
+  margin-bottom: var(--block-gap);
+  border-left: 3px solid transparent;
+  border-radius: 0;
+  cursor: text;
+  transition:
+    background 80ms ease,
+    border-color 80ms ease;
+}
+
+.block:hover:not(.block--active) {
+  background: color-mix(in srgb, var(--color-surface) 50%, transparent);
+}
+
+.block--active {
+  background: var(--color-surface);
+  border-left-color: var(--color-accent);
+  padding-left: 12px;
+}
+
+/* Textarea (edit mode) */
+.block__textarea {
+  display: block;
+  width: 100%;
+  font-family: var(--font-edit);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  caret-color: var(--color-accent);
+}
+
+/* GFM table */
+.block__render table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+}
+
+.block__render th,
+.block__render td {
+  border: 0.5px solid var(--color-border);
+  padding: 0.4rem 0.75rem;
+  color: var(--color-secondary);
+}
+
+.block__render th {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Task lists */
+.block__render .task-list-item {
+  list-style: none;
+  margin-left: -1rem;
+}
+
+.block__render input[type="checkbox"] {
+  margin-right: 0.4rem;
+  accent-color: var(--color-accent);
+  cursor: default;
+}
+
+/* Placeholder click zone below the last block */
+.block-list__placeholder {
+  flex: 1;
+  min-height: 80px;
+  cursor: text;
+  border-radius: 2px;
+  border: 1px dashed transparent;
+  transition: border-color 120ms ease;
+  margin-top: 0.25rem;
+}
+
+.block-list__placeholder:hover {
+  border-color: color-mix(in srgb, var(--color-muted) 30%, transparent);
+}
